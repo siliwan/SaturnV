@@ -48,12 +48,12 @@ func write_to_db(seconds, weight, vel float64) {
 }
 
 func first_flight(seconds, weight, vel float64) float64 {
-	diff := first_to_lower(161)
+	diff := first_to_lower(50)
 	new_weight := weight - math.Abs(diff)
 	new_velocity := get_velocity(seconds, weight, vel, diff)
 	fmt.Println("Step:", seconds, "New weight:", new_weight, "Vel:", new_velocity)
-	write_to_db(seconds, new_weight, new_velocity)
-	if (seconds == 160) {
+	write_to_db(seconds, weight, new_velocity)
+	if (seconds == 49) {
 		return new_velocity
 	} else {
 		first_flight(seconds + 1, new_weight, new_velocity)
@@ -66,13 +66,13 @@ func first_step(m1, m2, v2 float64) float64 {
 }
 
 func stepn(m_rakete, m_gas, vel_rakete float64) float64 {
-	return (2 * ((m_rakete * vel_rakete + m_gas * float64(exit_lower)) / (m_rakete - m_gas)) - vel_rakete)
+	return (m_rakete * vel_rakete + m_gas * float64(exit_lower)) / (m_rakete)
 }
 
 func get_velocity(seconds, new_weight, vel, diff float64) float64 {
 	if (seconds == 0) {
-		return 0
-	} else if (seconds == 1) {
+		/*		return 0
+	} else if (seconds == 1) {*/
 		return first_step(new_weight, diff, float64(exit_lower))
 	} else {
 		return stepn(new_weight, diff, vel)
