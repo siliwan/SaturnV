@@ -5,6 +5,8 @@ import (
 	"math"
 	"time"
 	"os"
+	//"github.com/thanhpk/randstr"
+
 )
 
 var (
@@ -20,10 +22,12 @@ var (
 )
 
 func main(){
+	getRockets()
 	time.Sleep(50 * time.Millisecond)
-	weight := full_lower + full_center + full_upper
+	//fmt.Println(randstr.Hex(16))
+	/*weight := full_lower + fulnl_center + full_upper
 	fmt.Println(first_flight(0, float64(weight), 0))
-	fmt.Println(empty_lower + full_center + full_upper)
+	fmt.Println(empty_lower + full_center + full_upper)*/
 }
 
 func first_to_lower(seconds int) float64{
@@ -71,9 +75,10 @@ func stepn(m_rakete, m_gas, vel_rakete float64) float64 {
 
 func get_velocity(seconds, new_weight, vel, diff float64) float64 {
 	if (seconds == 0) {
-		/*		return 0
-	} else if (seconds == 1) {*/
-		return first_step(new_weight, diff, float64(exit_lower))
+				return 0
+	} else if (seconds == 1) {
+		return stepn(new_weight, diff, vel)
+		//return first_step(new_weight, diff, float64(exit_lower))
 	} else {
 		return stepn(new_weight, diff, vel)
 	}
