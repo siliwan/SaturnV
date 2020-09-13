@@ -16,7 +16,7 @@ func getRockets(){
 		var rocket Rocket
 		content := extract(f)
 		json.Unmarshal([]byte(content), &rocket)
-		fmt.Printf(rocket.Name)
+		fmt.Println(rocket.Name)
 	}
 }
 
