@@ -26,12 +26,17 @@ func main(){
 	getRockets()
 	time.Sleep(50 * time.Millisecond)
 	first_weight := full_lower + full_center + full_upper + payload
-	lower_vel, lower_weight := first_stage_flight(0, float64(first_weight), 0, 0)
-	center_vel, center_weight := second_stage_flight(0, lower_weight - float64(empty_lower), lower_vel)
-	upper_vel, upper_weight := third_stage_flight(0, center_weight - float64(empty_center), center_vel)
+	lower_vel, lower_weight := first_stage_flight(160, float64(first_weight), 0, 0)
+	center_vel, center_weight := second_stage_flight(386, lower_weight - float64(empty_lower), lower_vel)
+	upper_vel, upper_weight := third_stage_flight(318, center_weight - float64(empty_center), center_vel)
 	fmt.Println(lower_vel, lower_weight)
+	fmt.Println("Target:", empty_lower + full_center + full_upper + payload)
 	fmt.Println(center_vel, center_weight)
+	fmt.Println("Target:", empty_center + full_upper + payload)
 	fmt.Println(upper_vel, upper_weight)
+	fmt.Println("Target:", empty_upper + payload)
+	fmt.Println("Result:", upper_weight - float64(empty_upper))
+	fmt.Println("Target:", payload)
 }
 
 func step(m_rakete, m_gas, vel_rakete, exit_vel float64) float64 {
