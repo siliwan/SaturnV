@@ -2,7 +2,7 @@ package main
 
 import (
 	"math"
-	//"fmt"
+	"fmt"
 )
 
 func first_stage_fuel(seconds int) float64{
@@ -14,11 +14,7 @@ func first_stage_flight(seconds int, weight, vel, alt float64) (float64, float64
 	new_weight := weight - math.Abs(diff)
 	new_velocity := step(new_weight, diff, vel, float64(exit_lower))
 	added := altitude(new_velocity, float64(burn_lower) / 50)
-	/*
-	fmt.Println("DIFF:", float64(burn_lower) / 50)
-	fmt.Println("ACC:", acc(new_velocity, float64(burn_lower) / 50))
-	fmt.Println("GRAV:", gravity(new_velocity, float64(burn_lower) / 50))
-*/
+	fmt.Println(gravity(new_velocity, float64(burn_lower) / 50))
 	if (seconds == 0) {
 		return new_velocity, new_weight, alt + added
 	}
