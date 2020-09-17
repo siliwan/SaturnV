@@ -1,8 +1,7 @@
 package main
 
 import (
-	"fmt"
-	//"encoding/json"
+	"encoding/json"
 )
 
 
@@ -24,14 +23,14 @@ type Output struct {
 }
 
 type Profile struct {
-	CSV bool `json:"single"`
-	Graph bool `json:"gravity"`
-	Text bool `json:"air"`
+	Single bool `json:"single"`
+	Gravity bool `json:"gravity"`
+	Air bool `json:"air"`
 }
 
 func getSettings() Settings{
 	content := extract("./settings.json")
-	fmt.Println(content)
 	var settings Settings
+	json.Unmarshal(content, &settings)
 	return settings
 }

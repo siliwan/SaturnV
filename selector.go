@@ -6,13 +6,14 @@ import (
 	"os"
 	"os/exec"
 	"time"
+	"strings"
 )
 
 // Global vars for state setting. Bad behaviour, don't repliacte.
 var (
 	menu map[int]string
 	rocket Rocket
-	settings Settings
+	planet Planet
 )
 
 func startup() {
@@ -30,23 +31,28 @@ func startup() {
 	fmt.Println("- - - - - - - - - - - - - - - - -")
 	fmt.Println("")
 	fmt.Println("Select menu:")
-	fmt.Println(1, menu[1])
-	fmt.Println(2, menu[2])
-	fmt.Println(3, menu[3])
+	fmt.Printf("%d) %s\n", 1, menu[1])
+	fmt.Printf("%d) %s\n", 2, menu[2])
+	fmt.Printf("%d) %s\n", 3, menu[3])
+	fmt.Println("\n")
+	fmt.Println("q) Quit rocket simulator.")
 
 	fmt.Println("")
 	reader := bufio.NewReader(os.Stdin)
 	text, _ := reader.ReadString('\n')
+	text = strings.ReplaceAll(text, "\n", "")
 
 	switch text {
-	case "1\n":
+	case "1":
 		time.Sleep(75 * time.Millisecond)
 		rockets_menu()
-	case "2\n":
+	case "2":
 		time.Sleep(75 * time.Millisecond)
-		fmt.Println(getSettings())
-	case "3\n":
+		settings_menu()
+	case "3":
 		time.Sleep(75 * time.Millisecond)
-		rockets_menu()
+		execute_menu()
+	case "q":
+		os.Exit(0)
 	}
 }
