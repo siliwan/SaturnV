@@ -9,12 +9,9 @@ Files must be located in the =rockets/= directory.
       "stages": [
           {
               "name": "Lower stage",
-              // It is assumed that the liftoff_weight = full_weight of all stages + payload_weight
               "full_weight": 2286000,
               "empty_weight": 135000,
-              //Exit velocity of gas, negative because + Axis is upwards.
               "exit_velocity": -2980
-              //Burn time in seconds
               "burn_time": 161,
           },
           {
@@ -39,29 +36,19 @@ Files must be located in the =rockets/= directory.
 This file must be available as =settings.json= in project root.
 #+begin_src javascript
   {
-      //Output formats in output/ directory
       "output": {
-          //Output to CSV (Excel) format.
           "csv": true,
-          //GNUplot plotting
-              "graph": true,
-          //Overview of results as plain text
+          "graph": true,
           "text": true,
       },
-      //Settings for the flight mode
       "profile": {
-          //Calculate each stage individually or as one flight
           "single": true,
-          //Toggle gravity
           "gravity": true,
-          //Toggle air resistance
           "air": true
       }
-      //Settings of the current planet
       "planet": {
           "name": "Earth",
           "gravity": 9.81
-          //Air pressure currently not controllable.
       }
   }
 #+end_src

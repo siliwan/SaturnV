@@ -1,7 +1,6 @@
  package main
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -29,8 +28,9 @@ var (
 // S1 vel_target : ~3979
 
 func main(){
-	getRockets()
 	time.Sleep(50 * time.Millisecond)
+	startup()
+	/*
 	first_weight := full_lower + full_center + full_upper + payload
 	lower_vel, lower_weight, lower_alt := first_stage_flight(49, float64(first_weight), 0, 0)
 	center_vel, center_weight, center_alt := second_stage_flight(49, lower_weight - float64(empty_lower), lower_vel, lower_alt)
@@ -39,6 +39,7 @@ func main(){
 	fmt.Println(center_vel, center_weight, center_alt)
 	fmt.Println(upper_vel, upper_weight, upper_alt)
 	fmt.Println("Payload:", upper_weight - float64(empty_upper), "Vel:", upper_vel, "Alt:", upper_alt)
+*/
 }
 
 func step(m_rakete, m_gas, vel_rakete, exit_vel float64) float64 {

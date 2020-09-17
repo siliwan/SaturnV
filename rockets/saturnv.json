@@ -1,0 +1,27 @@
+{
+    "name": "Saturn V",
+      "stages": [
+          {
+              "name": "Lower stage",
+              "full_weight": 2286000,
+              "empty_weight": 135000,
+              "exit_velocity": -2980,
+              "burn_time": 161
+          },
+          {
+              "name": "Center stage",
+              "full_weight": 491000,
+              "empty_weight": 39000,
+              "exit_velocity": -4160,
+              "burn_time": 387
+          },
+          {
+              "name": "Upper stage",
+              "full_weight": 120000,
+              "empty_weight": 13300,
+              "exit_velocity": -4180,
+              "burn_time": 319
+          }
+      ],
+    "payload_weight": 41000
+  }

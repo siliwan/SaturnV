@@ -8,13 +8,13 @@ import (
 
 func getRocketFiles() []string {
 	rockets := []string{}
-	files, err := ioutil.ReadDir("./")
+	files, err := ioutil.ReadDir("./rockets/")
     if err != nil {
         fmt.Println(err)
     }
     for _, f := range files {
 		if filepath.Ext(f.Name()) == ".json" {
-			rockets = append(rockets, f.Name())
+			rockets = append(rockets, "./rockets/" + f.Name())
 		}
     }
 	return rockets

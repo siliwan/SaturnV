@@ -1,0 +1,22 @@
+{
+    "output": {
+        "csv": true,
+        "graph": true,
+        "text": true
+    },
+    "profile": {
+        "single": true,
+        "gravity": true,
+        "air": true
+    }
+    "planets": [
+        {
+            "name": "Earth",
+            "gravity": 9.81
+        }
+        {
+            "name": "Mars",
+            "gravity": 3.771
+        }
+    ]
+  }
