@@ -1,0 +1,20 @@
+{
+    "name": "Falcon 9",
+      "stages": [
+          {
+              "name": "Lower stage",
+              "full_weight": 507500,
+              "empty_weight": 33800,
+              "exit_velocity": -2570,
+              "burn_time": 162
+          },
+          {
+              "name": "Upper stage",
+              "full_weight": 108185,
+              "empty_weight": 14951,
+              "exit_velocity": -3350,
+              "burn_time": 397
+          }
+      ],
+    "payload_weight": 8300
+  }

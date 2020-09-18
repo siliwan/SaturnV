@@ -13,6 +13,7 @@ func launch() {
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 
+	//Debug toggle for countdown
 	if false {
 		fmt.Println("- - - - - - - -")
 		fmt.Println("Rocket launch...")
@@ -64,7 +65,35 @@ func launch() {
 }
 
 func compute() {
+	stages := rocket.Stages
+	liftoff_weight := rocket.Payload_weight
+	total_steps := 0
+	for x := range stages {
+		liftoff_weight += stages[x].Full_weight
+		total_steps += stages[x].Burn_time
+	}
+	/*
+	lower_vel, lower_weight, lower_alt := first_stage_flight(49, float64(liftoff_weight), 0, 0)
+	center_vel, center_weight, center_alt := second_stage_flight(49, lower_weight - float64(empty_lower), lower_vel, lower_alt)
+	upper_vel, upper_weight, upper_alt := third_stage_flight(49, center_weight - float64(empty_center), center_vel, center_alt)
+*/
+	var current_velocity, current_altitude, current_weight float64
+	for x := range stages {
+		fmt.Println(stages[x])
+		current_velocity, current_altitude, current_weight = compute_stage(stages[x], current_velocity, current_altitude, current_weight)
+	}
+	result.Steps = total_steps
+	result.Velocity = current_velocity
+	result.Weight = current_weight
+	result.Altitude = current_altitude
+	results()
+}
 
+// End of run: Stage gets dropped, subtract weight.
+func compute_stage(stage Stage, velocity, altitude, weight float64) (float64, float64, float64){
+	x, y, z := compute_step(stage.Burn_time, weight, velocity, altitude, stage)
+	return x, (y - weight), z
+	//velocity, altitude, weight - float64(stage.Empty_weight)
 }
 
 // length key must equal length values

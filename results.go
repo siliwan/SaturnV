@@ -10,7 +10,12 @@ type Results struct {
 	Stages []Flight
 	Velocity float64
 	Altitude float64
+	Weight float64
 }
+
+var (
+	result Results
+)
 
 // All values are stored at the end of a stage.
 type Flight struct {
@@ -27,6 +32,9 @@ func results() {
 	fmt.Println("\n")
 
 	fmt.Println("Rocket:", rocket.Name)
-	fmt.Println("a")
+	fmt.Println("Started from:", planet.Name)
 
+	fmt.Println("Final velocity:", result.Velocity)
+	fmt.Println("Final weight:", result.Weight)
+	fmt.Println("Final altitude:", result.Altitude)
 }

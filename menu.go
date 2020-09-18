@@ -21,7 +21,7 @@ func rockets_menu() {
 
 	rockets := getRockets()
 	for i, r := range rockets {
-		fmt.Printf("%d) %s", i + 1, r.Name)
+		fmt.Printf("%d) %s \n", i + 1, r.Name)
 	}
 	fmt.Println("\n")
 	fmt.Println("x) to return to menu.")
