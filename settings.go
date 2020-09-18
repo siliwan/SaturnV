@@ -13,7 +13,7 @@ type Settings struct {
 
 type Planet struct {
 	Name string `json:"name"`
-	Gravity string `json:"gravity"`
+	Gravity float64 `json:"gravity"`
 }
 
 type Output struct {

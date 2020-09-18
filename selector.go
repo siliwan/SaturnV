@@ -42,6 +42,7 @@ func startup() {
 	text, _ := reader.ReadString('\n')
 	text = strings.ReplaceAll(text, "\n", "")
 
+
 	switch text {
 	case "1":
 		time.Sleep(75 * time.Millisecond)

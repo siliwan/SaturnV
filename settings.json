@@ -17,6 +17,10 @@
         {
             "name": "Mars",
             "gravity": 3.771
+        },
+        {
+            "name": "Jupiter",
+            "gravity": 24.79
         }
     ]
   }

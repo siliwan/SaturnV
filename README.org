@@ -52,3 +52,6 @@ This file must be available as =settings.json= in project root.
       }
   }
 #+end_src
+* Deps
+- Figlet
+- Go ~1.15

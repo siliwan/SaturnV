@@ -82,7 +82,7 @@ func settings_menu() {
 	fmt.Println("Planets:")
 	fmt.Println("(Select one)")
 	for i, p := range settings.Planets {
-		fmt.Printf("%d) %s\n", i + 1, p.Name)
+		fmt.Printf("%d) %s, Gravity: %fm/s \n", i + 1, p.Name, p.Gravity)
 	}
 
 	fmt.Println("\n")
@@ -119,16 +119,38 @@ func execute_menu() {
 	fmt.Println("- - - - - - - - - - - - -")
 
 	if rocket.Name == "" || planet.Name == "" {
-		fmt.Println("ERROR! Execution failed.")
-		fmt.Println("You need to select rocket & planet before launch!")
-		fmt.Println("\n")
-		for i := 0; i < 35; i++ {
-			fmt.Print(".")
-			time.Sleep(100 * time.Millisecond)
-		}
+		missing_element()
+	}
+
+	fmt.Println("\n")
+	fmt.Println("Configuration:")
+	fmt.Println("Rocket:", rocket.Name)
+	fmt.Println("Planet:", planet.Name)
+
+	fmt.Println("\n")
+	fmt.Println("Confirm configuration? (y/n)")
+
+	reader := bufio.NewReader(os.Stdin)
+	text, _ := reader.ReadString('\n')
+
+	text = strings.ReplaceAll(text, "\n", "")
+
+	switch text {
+	case "y":
+		launch()
+	case "n":
 		startup()
 	}
 
+}
 
-
+func missing_element() {
+	fmt.Println("ERROR! Execution failed.")
+	fmt.Println("You need to select rocket & planet before launch!")
+	fmt.Println("\n")
+	for i := 0; i < 35; i++ {
+		fmt.Print(".")
+		time.Sleep(100 * time.Millisecond)
+	}
+	startup()
 }

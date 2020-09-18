@@ -1,8 +1,39 @@
-#+TITLE: Simulation
-#+LATEX_HEADER: \usepackage[]{babel}
-#+LANGUAGE: de
-* Einführung
-Auch wenn sich die Flugbahn einer =Saturn V= gut in =Excel= oder einem ähnlichen
+% Created 2020-09-18 Fri 07:55
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\usepackage{minted}
+\usepackage[, germanb]{babel}
+\author{Jakob Klemm}
+\date{\today}
+\title{Simulation}
+\hypersetup{
+ pdfauthor={Jakob Klemm},
+ pdftitle={Simulation},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.1 (Org mode 9.3)},
+ pdflang={Germanb}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{Einführung}
+\label{sec:orgfd3e740}
+Auch wenn sich die Flugbahn einer \texttt{Saturn V} gut in \texttt{Excel} oder einem ähnlichen
 Programm berechnen lässt, so sind diese Programme doch limitiert. Sowohl in
 ihrer Geschwindigkeit, als auch ihn den Funktionen und Einstellungen, welche für
 eine solche Simulation relevant sein könnten. Mit den wenigen Werten, welche uns
@@ -12,18 +43,19 @@ und Flugbahnen zu berechnen.
 Und trotzdem ist es äusserst kompliziert, die Simulation interaktiv zu gestalten
 und dem Betrachter die Möglichkeit zu geben, selber die Kontrolle zu übernehmen.
 Dazu kommt ebenfalls noch die starke Systemgebundenheit solcher Dateien. Auch
-wenn =Excel= weit verbreitet ist und es genügend kostenlose Alternativen gibt,
-welche in der Lage sind =Excel-Dateien= zu öffnen, ist man doch an die Funktionen
-und Bedingungen dieser Programme gebunden. Obwohl einige /kostenlos/ sind, findet
-man kaum /freie/ oder gar /open-source/ Varianten.
+wenn \texttt{Excel} weit verbreitet ist und es genügend kostenlose Alternativen gibt,
+welche in der Lage sind \texttt{Excel-Dateien} zu öffnen, ist man doch an die Funktionen
+und Bedingungen dieser Programme gebunden. Obwohl einige \emph{kostenlos} sind, findet
+man kaum \emph{freie} oder gar \emph{open-source} Varianten.
 
 Die Formeln und Konzepte, mit welchen sich die Geschwindigkeiten und Flugbahnen
-einer =Saturn V= berechnet werden, lassen sich unter verschiedenen Bedienungen und
+einer \texttt{Saturn V} berechnet werden, lassen sich unter verschiedenen Bedienungen und
 für verschiedene Raketen oder Flugobjekte anwenden. Um den Prozess interaktiver
 und intuitiver zu machen, war es von Nöten die Simulation als ein ausführbares,
 interaktives Programm zu implementieren.
-* Implementierung
-Der Begriff "/Raketensimulator/" verbinden die meisten im ersten Moment mit
+\section{Implementierung}
+\label{sec:org48904cb}
+Der Begriff "\emph{Raketensimulator}" verbinden die meisten im ersten Moment mit
 Supercomputern und hoch komplexen Berechnungen. Trotzdem lässt sich das meiste
 auf einfache, lineare oder exponentielle Gleichungen bringen, die von Hand oder
 bereits mit einem einfachen Taschenrechner gelöst werden können.
@@ -31,47 +63,58 @@ bereits mit einem einfachen Taschenrechner gelöst werden können.
 Daher war auch die Wahl der Programmiersprache eher offen, da die Berechnungen
 selbst nicht besonders aufwendig sind. Trotzdem gab es einige Kriterien, welche
 eine Programmiersprache für diese Aufgabe erfüllen musste.
-- Die Fähigkeit Dateien zu lesen, zu interpretieren und zu schreiben.
-- Einfache, lineare Algebra sowie häufige mathematische Funktionen.
-- Zugriff auf externe Programme über eine standardisierte Schnittstelle.
-- Kompilierung in eine alleinstehende, ausführbare Datei.
+\begin{itemize}
+\item Die Fähigkeit Dateien zu lesen, zu interpretieren und zu schreiben.
+\item Einfache, lineare Algebra sowie häufige mathematische Funktionen.
+\item Zugriff auf externe Programme über eine standardisierte Schnittstelle.
+\item Kompilierung in eine alleinstehende, ausführbare Datei.
+\end{itemize}
 
 Auch wenn viele Sprachen und Programme zur Verfügung standen, fiel die Wahl auf
-=Golang=, eine Sprache die ursprünglich von =Google= entwickelt wurde. =Golang=
+\texttt{Golang}, eine Sprache die ursprünglich von \texttt{Google} entwickelt wurde. \texttt{Golang}
 erlaubt es Entwicklern schnelle, parallele und nebenläufige Programme systemnah
 zu schreiben.
-** Struktur
-Obwohl der gesamte Code /open-source/ und auf =Github= verfügbar ist, sollen einige
+\subsection{Struktur}
+\label{sec:orgf787979}
+Obwohl der gesamte Code \emph{open-source} und auf \texttt{Github} verfügbar ist, sollen einige
 Funktionen hier trotzdem besprochen werden, da die Codebase verwirrend sein
 kann.
-*** Menü
+\subsubsection{Menü}
+\label{sec:org274bade}
 Technisch zwar der am wenigsten interessante Teil, ist es doch ein äusserst
 relevantes Stück der Simulation. Basierend auf einfachen Konsolen-Printouts und
 Zahleninputs, macht es dieses Menü die einfache Interaktion mit der Software
 möglich, ohne dabei besondere Anleitungen oder Erklärungen zu verfassen. \\
-*** Einstellungen
+\subsubsection{Einstellungen}
+\label{sec:orgbb22068}
 Da Raketen unter verschiedenen Kriterien und in verschiedenen Situationen
 simuliert werden können, war es wichtig, die einzelnen Funktionen und Parameter
 sowohl einstellbar, als auch ausschaltbar zu machen. Dies geschieht über
-=settings.json=, einem einfachen =JSON-file= worin alle Parameter und
+\texttt{settings.json}, einem einfachen \texttt{JSON-file} worin alle Parameter und
 Einstellungsmöglichkeiten, sowie eine Liste der verfügbaren Umgebungen
 aufgelistet sind.\\
 Über das Hauptmenü, sowie die beiden Untermenüs ist es möglich, die Kriterien
 für den Flug zu setzen. Sobald diese dann feststehen, kann die Simulation
 gestartet werden.
-*** Module
+\subsubsection{Module}
+\label{sec:orge0799a9}
 Da verschiedene Raketen verschiedene Treibstoffe, Bauarten, Triebwerke und
 Flugbahnen besitzen, war es ebenfalls wichtig, die Software für verschiedene
-Situationen gewappnet zu strukturieren. Im dedizierten =rockets/= Ordner können
-beliebige Konfigurationen und Modelle in Form von =JSON-Dateien= abgelegt werden,
+Situationen gewappnet zu strukturieren. Im dedizierten \texttt{rockets/} Ordner können
+beliebige Konfigurationen und Modelle in Form von \texttt{JSON-Dateien} abgelegt werden,
 welche dann der Simulation zur Verfügung stehen.
-** Berechnungen
-Auch wenn die =Raketengleichung= und andere Hilfsmittel meist nur ein Handgriff
+\subsection{Berechnungen}
+\label{sec:orge9cac3b}
+Auch wenn die \texttt{Raketengleichung} und andere Hilfsmittel meist nur ein Handgriff
 entfernt sind, ist es doch weiterhin möglich, die Raketen schrittweise zu
 simulieren. Da jeder Schritt in einer solchen Simulation beinahe identisch
 abläuft, aber trotzdem von allen vorherigen Schritten abhängig ist, sowie alle
 nachfolgenden Schritte beeinflusst, war es nur logisch, die Simulation rekursiv
 zu implementieren.
-** Raketen
-** Plotting
-* Resultate
+\subsection{Raketen}
+\label{sec:org655e6eb}
+\subsection{Plotting}
+\label{sec:org4d35381}
+\section{Resultate}
+\label{sec:org18d95f2}
+\end{document}
