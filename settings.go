@@ -23,7 +23,6 @@ type Output struct {
 }
 
 type Profile struct {
-	Single bool `json:"single"`
 	Gravity bool `json:"gravity"`
 	Air bool `json:"air"`
 }

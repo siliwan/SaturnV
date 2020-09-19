@@ -5,7 +5,6 @@
         "text": true
     },
     "profile": {
-        "single": true,
         "gravity": true,
         "air": true
     },

@@ -75,3 +75,5 @@ zu implementieren.
 ** Raketen
 ** Plotting
 * Resultate
+Probleme genaue Daten für Falcon 9 zu bekommen (private firma, def. contract) ->
+grosse ungenauigkeit.

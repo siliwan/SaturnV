@@ -73,7 +73,6 @@ func settings_menu() {
 
 	fmt.Println("Flight profile:")
 
-	fmt.Println("Simulate each stage indivudally:", settings.Profile.Single)
 	fmt.Println("Gravity enabled:", settings.Profile.Gravity)
 	fmt.Println("Air resistance enabled:", settings.Profile.Air)
 

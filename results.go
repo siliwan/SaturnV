@@ -28,7 +28,6 @@ func results() {
 	fmt.Println("- - - - -")
 	fmt.Println("Results:")
 	fmt.Println("- - - - -")
-
 	fmt.Println("\n")
 
 	fmt.Println("Rocket:", rocket.Name)
