@@ -47,9 +47,9 @@ func launch() {
 
 	fmt.Println("Flight commencing, please stand by.")
 
-	for i := 1; i < 50; i++ {
+	for i := 1; i < 30; i++ {
 		fmt.Print(".")
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(75 * time.Millisecond)
 	}
 
 	final := exec.Command("clear")
@@ -72,15 +72,27 @@ func compute() {
 		liftoff_weight += stages[x].Full_weight
 		total_steps += stages[x].Burn_time
 	}
-	/*
+	fmt.Println("initial liftoff", first_weight)
+	fmt.Println(liftoff_weight, total_steps)
+	fmt.Println("Normal compute")
 	lower_vel, lower_weight, lower_alt := first_stage_flight(49, float64(liftoff_weight), 0, 0)
 	center_vel, center_weight, center_alt := second_stage_flight(49, lower_weight - float64(empty_lower), lower_vel, lower_alt)
 	upper_vel, upper_weight, upper_alt := third_stage_flight(49, center_weight - float64(empty_center), center_vel, center_alt)
-*/
+	fmt.Println(lower_vel, lower_alt, lower_weight)
+	fmt.Println(center_vel, upper_alt, upper_weight)
+	fmt.Println(upper_vel, upper_alt, upper_weight - float64(empty_lower))
+	fmt.Println("New setup")
 	var current_velocity, current_altitude, current_weight float64
+	current_velocity, current_altitude = 0, 0
+	current_weight = float64(liftoff_weight)
+	/*
+	current_velocity, current_altitude, current_weight = compute_stage(stages[0], current_velocity, current_altitude, current_weight)
+	fmt.Println(current_velocity, current_altitude, current_weight)
+	*/
 	for x := range stages {
 		fmt.Println(stages[x])
 		current_velocity, current_altitude, current_weight = compute_stage(stages[x], current_velocity, current_altitude, current_weight)
+		fmt.Println(current_velocity, current_altitude, current_weight)
 	}
 	result.Steps = total_steps
 	result.Velocity = current_velocity
@@ -91,9 +103,8 @@ func compute() {
 
 // End of run: Stage gets dropped, subtract weight.
 func compute_stage(stage Stage, velocity, altitude, weight float64) (float64, float64, float64){
-	x, y, z := compute_step(stage.Burn_time, weight, velocity, altitude, stage)
-	return x, (y - weight), z
-	//velocity, altitude, weight - float64(stage.Empty_weight)
+	x, y, z := compute_step(stage.Burn_time - 1, weight, velocity, altitude, stage)
+	return x, y, z
 }
 
 // length key must equal length values
