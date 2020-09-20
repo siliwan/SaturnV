@@ -1,4 +1,4 @@
-% Created 2020-09-18 Fri 07:55
+% Created 2020-09-20 Sun 16:37
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -32,7 +32,7 @@
 \tableofcontents
 
 \section{Einführung}
-\label{sec:orgfd3e740}
+\label{sec:orgc7617af}
 Auch wenn sich die Flugbahn einer \texttt{Saturn V} gut in \texttt{Excel} oder einem ähnlichen
 Programm berechnen lässt, so sind diese Programme doch limitiert. Sowohl in
 ihrer Geschwindigkeit, als auch ihn den Funktionen und Einstellungen, welche für
@@ -54,7 +54,7 @@ für verschiedene Raketen oder Flugobjekte anwenden. Um den Prozess interaktiver
 und intuitiver zu machen, war es von Nöten die Simulation als ein ausführbares,
 interaktives Programm zu implementieren.
 \section{Implementierung}
-\label{sec:org48904cb}
+\label{sec:orgc5299e9}
 Der Begriff "\emph{Raketensimulator}" verbinden die meisten im ersten Moment mit
 Supercomputern und hoch komplexen Berechnungen. Trotzdem lässt sich das meiste
 auf einfache, lineare oder exponentielle Gleichungen bringen, die von Hand oder
@@ -75,18 +75,18 @@ Auch wenn viele Sprachen und Programme zur Verfügung standen, fiel die Wahl auf
 erlaubt es Entwicklern schnelle, parallele und nebenläufige Programme systemnah
 zu schreiben.
 \subsection{Struktur}
-\label{sec:orgf787979}
+\label{sec:orga57a673}
 Obwohl der gesamte Code \emph{open-source} und auf \texttt{Github} verfügbar ist, sollen einige
 Funktionen hier trotzdem besprochen werden, da die Codebase verwirrend sein
 kann.
 \subsubsection{Menü}
-\label{sec:org274bade}
+\label{sec:org112ab39}
 Technisch zwar der am wenigsten interessante Teil, ist es doch ein äusserst
 relevantes Stück der Simulation. Basierend auf einfachen Konsolen-Printouts und
 Zahleninputs, macht es dieses Menü die einfache Interaktion mit der Software
 möglich, ohne dabei besondere Anleitungen oder Erklärungen zu verfassen. \\
 \subsubsection{Einstellungen}
-\label{sec:orgbb22068}
+\label{sec:org2b15879}
 Da Raketen unter verschiedenen Kriterien und in verschiedenen Situationen
 simuliert werden können, war es wichtig, die einzelnen Funktionen und Parameter
 sowohl einstellbar, als auch ausschaltbar zu machen. Dies geschieht über
@@ -97,24 +97,47 @@ aufgelistet sind.\\
 für den Flug zu setzen. Sobald diese dann feststehen, kann die Simulation
 gestartet werden.
 \subsubsection{Module}
-\label{sec:orge0799a9}
+\label{sec:org6ded60f}
 Da verschiedene Raketen verschiedene Treibstoffe, Bauarten, Triebwerke und
 Flugbahnen besitzen, war es ebenfalls wichtig, die Software für verschiedene
 Situationen gewappnet zu strukturieren. Im dedizierten \texttt{rockets/} Ordner können
 beliebige Konfigurationen und Modelle in Form von \texttt{JSON-Dateien} abgelegt werden,
 welche dann der Simulation zur Verfügung stehen.
 \subsection{Berechnungen}
-\label{sec:orge9cac3b}
+\label{sec:orgd8d03b2}
 Auch wenn die \texttt{Raketengleichung} und andere Hilfsmittel meist nur ein Handgriff
 entfernt sind, ist es doch weiterhin möglich, die Raketen schrittweise zu
 simulieren. Da jeder Schritt in einer solchen Simulation beinahe identisch
 abläuft, aber trotzdem von allen vorherigen Schritten abhängig ist, sowie alle
 nachfolgenden Schritte beeinflusst, war es nur logisch, die Simulation rekursiv
-zu implementieren.
+zu implementieren. \\
+Während das berechnen der neuen Masse eine einfache Rechnung darstellte, mussten
+kompliziertere mathematische Konzepte verwendet werden, um die neue
+Geschwindigkeit zu berechnen. Als erstes wird über die Impulserhaltung die neue
+Geschwindigkeit, ohne externe Kräfte, hier \texttt{ideal\_vel} genannt, berechnet. Danach
+werden damit die zusätzlich wirkenden Kräfte verrechnet.
+\begin{enumerate}
+\item Beschleunigung
+Mit der Impulserhaltung lässt sich lediglich die Geschwindigkeit oder Masse
+eines Objektes berechnen. Allerdings hat man dann noch keine Idee von der
+Beschleunigung die auf ein Objekt wirkt. Allerdings stellt sich heraus, dass
+ein einfacher Trick verwendet werden kann, um diese Berechnung zu
+vereinfachen.
+Die Beschleunigung lässt sich wie folgt mathematisch berechnen:
+\[\vec{a} = \frac{\triangle v}{\triangle t}\]
+Da die Zeit im hier verwendeten Schrittverfahren pro Schritt immer \texttt{1} beträgt,
+kann man einfacher sagen:
+\[\vec{a} = \triangle v}\]
+\end{enumerate}
 \subsection{Raketen}
-\label{sec:org655e6eb}
+\label{sec:orgc9bc73c}
 \subsection{Plotting}
-\label{sec:org4d35381}
+\label{sec:org9d6abde}
 \section{Resultate}
-\label{sec:org18d95f2}
+\label{sec:orgbea47e9}
+Probleme genaue Daten für Falcon 9 zu bekommen (private firma, def. contract) ->
+grosse ungenauigkeit.
+cw:
+\url{http://www.staedtisches-gymnasium-wermelskirchen.de/sites/default/files/physik/Fall-Papierkegel-mit-Luftwiderstand.pdf}
+luftdruck: \url{https://wind-data.ch/tools/luftdichte.php?lng=de}
 \end{document}

@@ -71,9 +71,45 @@ entfernt sind, ist es doch weiterhin möglich, die Raketen schrittweise zu
 simulieren. Da jeder Schritt in einer solchen Simulation beinahe identisch
 abläuft, aber trotzdem von allen vorherigen Schritten abhängig ist, sowie alle
 nachfolgenden Schritte beeinflusst, war es nur logisch, die Simulation rekursiv
-zu implementieren.
+zu implementieren. \\
+Während das berechnen der neuen Masse eine einfache Rechnung darstellte, mussten
+kompliziertere mathematische Konzepte verwendet werden, um die neue
+Geschwindigkeit zu berechnen. Als erstes wird über die Impulserhaltung die neue
+Geschwindigkeit, ohne externe Kräfte, hier =ideal_vel= genannt, berechnet. Danach
+werden damit die zusätzlich wirkenden Kräfte verrechnet.
+1. Mit der Impulserhaltung lässt sich lediglich die Geschwindigkeit oder Masse
+   eines Objektes berechnen. Allerdings hat man dann noch keine Idee von der
+   Beschleunigung die auf ein Objekt wirkt. Allerdings stellt sich heraus, dass
+   ein einfacher Trick verwendet werden kann, um diese Berechnung zu
+   vereinfachen.
+   Die Beschleunigung lässt sich wie folgt mathematisch berechnen:
+   \[\vec{a} = \frac{\triangle v}{\triangle t}\]
+   Da die Zeit im hier verwendeten Schrittverfahren pro Schritt immer =1= beträgt,
+   kann man einfacher sagen:
+   \[\vec{a} = \triangle v}\]
+2. \(\triangle t\) erlaubte es dann einfach, die extern wirkenden Kräfte, wie
+   beispielsweise die Schwerkraft davon abzuziehen. \[a_neu = \trangle t -
+   9.81\]. Die neue Beschleunigung lässt sich dann wieder gleich in eine
+   Geschwindigkeit umrechnen und zur ursprünglichen Geschwindigkeit addieren, um
+   die neue Geschwindigkeit zu erhalten.
+3. Der Luftwiderstand war einiges komplizierter zu berechnen als die
+   Schwerkraft. Zum einen mussten technische Probleme und Limitierungen
+   berücksichtigt werden, wie beispielsweise die fehlende Präzision bei sehr
+   kleinen Dezimalzahlen. Auch die fehlenden Daten und Werte stellten sich als
+   grosses Problem heraus.
+** Probleme
 ** Raketen
+
 ** Plotting
+Die ursprüngliche Planung dieser Software enthielt die Möglichkeit, die
+berechneten Flugdaten als Graphen zu exportieren. Aufgrund von zeitlichen und
+technischen Limitierungen mussten diese Funktionen allerdings weggelassen
+werden, sollen aber in einer späteren Version der Software implementiert werden.
+Aktuell werden die Flugdaten lediglich in der Konsole, sowie einem
+=CSV-ähnlichen= Format exportiert und gespeichert.
 * Resultate
 Probleme genaue Daten für Falcon 9 zu bekommen (private firma, def. contract) ->
 grosse ungenauigkeit.
+cw:
+http://www.staedtisches-gymnasium-wermelskirchen.de/sites/default/files/physik/Fall-Papierkegel-mit-Luftwiderstand.pdf
+luftdruck: https://wind-data.ch/tools/luftdichte.php?lng=de

@@ -76,14 +76,10 @@ func compute() {
 	var current_velocity, current_altitude, current_weight float64
 	current_velocity, current_altitude = 0, 0
 	current_weight = float64(liftoff_weight)
-	/*
 	for x := range stages {
 		current_velocity, current_weight, current_altitude = compute_stage(stages[x], current_velocity, current_altitude, current_weight)
 		current_weight = current_weight - float64(stages[x].Empty_weight)
-		//fmt.Println(current_velocity, current_weight, current_altitude)
 	}
-*/
-	current_velocity, current_weight, current_altitude = compute_stage(stages[0], current_velocity, current_altitude, current_weight)
 	result.Steps = total_steps
 	result.Velocity = current_velocity
 	result.Weight = current_weight

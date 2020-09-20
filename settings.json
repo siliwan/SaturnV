@@ -1,9 +1,4 @@
 {
-    "output": {
-        "csv": true,
-        "graph": true,
-        "text": true
-    },
     "profile": {
         "gravity": true,
         "air": true

@@ -63,14 +63,6 @@ func settings_menu() {
 	fmt.Println("Loaded from 'settings.json'.")
 	fmt.Println("")
 
-	fmt.Println("Output:")
-
-	fmt.Println("CSV list output:", settings.Output.CSV)
-	fmt.Println("Plotting & graphs", settings.Output.Graph)
-	fmt.Println("Plain text printout:", settings.Output.Text)
-
-	fmt.Println("")
-
 	fmt.Println("Flight profile:")
 
 	fmt.Println("Gravity enabled:", settings.Profile.Gravity)

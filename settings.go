@@ -6,7 +6,6 @@ import (
 
 
 type Settings struct {
-	Output Output `json:"output"`
 	Profile Profile `json:"profile"`
 	Planets []Planet `json:"planets"`
 }
@@ -14,12 +13,6 @@ type Settings struct {
 type Planet struct {
 	Name string `json:"name"`
 	Gravity float64 `json:"gravity"`
-}
-
-type Output struct {
-	CSV bool `json:"csv"`
-	Graph bool `json:"graph"`
-	Text bool `json:"text"`
 }
 
 type Profile struct {
