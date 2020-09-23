@@ -55,7 +55,7 @@ func settings_menu() {
 	cmd.Stdout = os.Stdout
 	cmd.Run()
 
-	settings := getSettings()
+	settings = getSettings()
 
 	fmt.Println("- - - - - - - -")
 	fmt.Println("Current settings:")

@@ -1,5 +1,15 @@
 #+TITLE: Saturn V Simulation
+#+AUTHOR: Jakob Klemm, Maurice Weingärtner
 
+Rocket simulator for =Saturn V= and other Rockets. With support for more Rockets
+and Planets. Written in /simple/ =Golang= Code.
+A more detailed documentation can be found in =documentation.org= or =documentation.pdf=.
+Only tested on Linux. Most likely no Windows support.
+* Run
+1. Build the program using =go build= in the project root.
+2. Add any rockets in the =rockets/= directory.
+3. Adjust settings and add planets in =settings.json=
+4. Execute the program with =./saturnv=
 * Rocket
 Files must be located in the =rockets/= directory.
 #+begin_src javascript
@@ -29,29 +39,34 @@ Files must be located in the =rockets/= directory.
               "burn_time": 319
           }
       ],
-      "payload_weight": 41000
+      "payload_weight": 41000,
+      "steps": 50
+      "c": 0.52,
+      "area": 78.5
   }
 #+end_src
 * Settings
 This file must be available as =settings.json= in project root.
 #+begin_src javascript
   {
-      "output": {
-          "csv": true,
-          "graph": true,
-          "text": true,
-      },
       "profile": {
-          "single": true,
           "gravity": true,
           "air": true
       }
       "planet": {
           "name": "Earth",
           "gravity": 9.81
+      },
+      {
+          "name": "Mars",
+          "gravity": 3.771
+      },
+      {
+          "name": "Jupiter",
+          "gravity": 24.79
       }
   }
 #+end_src
-* Deps
-- Figlet
-- Go ~1.15
+* Dependencies
+The entire program should run without any external dependencies except for
+=Figlet=, which is used for the countdown.

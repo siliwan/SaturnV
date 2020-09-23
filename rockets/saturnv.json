@@ -24,5 +24,7 @@
           }
       ],
     "payload_weight": 0,
-    "steps": 50
+    "steps": 50,
+    "c": 0.52,
+    "area": 78.5
   }

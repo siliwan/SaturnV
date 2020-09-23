@@ -1,4 +1,4 @@
-% Created 2020-09-20 Sun 18:41
+% Created 2020-09-23 Wed 17:01
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -32,7 +32,7 @@
 \tableofcontents
 
 \section{Einführung}
-\label{sec:org278b65d}
+\label{sec:org87e98c1}
 Auch wenn sich die Flugbahn einer \texttt{Saturn V} gut in \texttt{Excel} oder einem ähnlichen
 Programm berechnen lässt, so sind diese Programme doch limitiert. Sowohl in
 ihrer Geschwindigkeit, als auch in den Funktionen und Einstellungen, welche für
@@ -54,7 +54,7 @@ verschiedene Raketen oder Flugobjekte anwenden. Um den Prozess interaktiver und
 intuitiver zu machen, war es von Nöten, die Simulation als ein ausführbares,
 interaktives Programm zu implementieren.
 \section{Implementierung}
-\label{sec:orge7180a8}
+\label{sec:org4d8d98f}
 Den Begriff \emph{Raketensimulator} verbinden die meisten Menschen im ersten Moment mit
 Supercomputern und hoch komplexen Berechnungen. Trotzdem lässt sich das meiste
 dennoch auf einfache, lineare oder exponentielle Gleichungen bringen, die von
@@ -75,19 +75,25 @@ Auch wenn viele Sprachen und Programme zur Verfügung standen, fiel die Wahl auf
 erlaubt Entwickler schnelle, parallele und nebenläufige Programme systemnah zu
 schreiben.
 \subsection{Struktur}
-\label{sec:orgc35e631}
+\label{sec:orgd98cea6}
 Obwohl der gesamte Code \emph{open-source} und auf \texttt{Github} verfügbar ist, sollen einige
 Funktionen hier trotzdem besprochen werden, da die Codebase verwirrend sein
 kann.
 \subsubsection{Menü}
-\label{sec:org18d02c2}
+\label{sec:org8a266e0}
 Das Menü ist technisch zwar der am wenigsten interessante Teil, doch es ist ein
 äusserst relevantes Stück der Simulation. Basierend auf einfachen
 Konsolen-Printouts und Zahleninputs, macht dieses Menü die einfache Interaktion
 mit der Software möglich, ohne dabei besondere Anleitungen oder Erklärungen zu
-verfassen.
+verfassen. Die Inputs werden dann in Zahlen umgewandelt, von wo sie mit
+\texttt{if-Schleifen} verarbeitet werden. Der Code ist nur bedingt fehlertolerant, da man
+beliebige Inputs an dass Programm geben kann, allerdings sind solche Fehler
+nicht schlimm und zwingen das Programm gelegentlich zum Neustart, ohne weitere
+Folgen nach sich zu ziehen. Zwischen den einzelnen Menüs und Listen wird
+ebenfalls die Konsole geleert. Diese Funktion wird aktuell nur auf \texttt{Linux}
+unterstützt.
 \subsubsection{Einstellungen}
-\label{sec:orgd3cd208}
+\label{sec:org4eeacab}
 Da Raketen unter verschiedenen Kriterien und in verschiedenen Situationen
 simuliert werden können, war es wichtig, die einzelnen Funktionen und Parameter
 sowohl einstellbar, als auch ausschaltbar zu machen. Dies geschieht über
@@ -98,14 +104,16 @@ aufgelistet sind.\\
 den Flug zu bestimmen. Sobald diese feststehen, kann die Simulation gestartet
 werden.
 \subsubsection{Module}
-\label{sec:org216e70c}
-Da verschiedene Raketen verschiedene Treibstoffe, Bauarten, Triebwerke und
-Flugbahnen besitzen, war es ebenfalls wichtig, eine Software zu schreiben, die
-für verschiedene Situationen gewappnet ist. Im dedizierten \texttt{rockets/} Ordner
-können beliebige Konfigurationen und Modelle in Form von \texttt{JSON-Dateien} abgelegt
-werden, welche dann der Simulation zur Verfügung stehen.
+\label{sec:org6b732d6}
+Verschiedene Raketen haben verschiedene Treibstoffe, Bauarten, Triebwerke und
+Flugbahnen. Daher war es ebenfalls wichtig, eine Software zu schreiben, die für
+verschiedene Situationen gewappnet ist. Im dedizierten \texttt{rockets/} Ordner können
+beliebige Konfigurationen und Modelle in Form von \texttt{JSON-Dateien} abgelegt werden,
+welche dann der Simulation zur Verfügung stehen. Über \texttt{settings.json} ist es
+ebenfalls möglich, weitere Planeten hinzuzufügen, solange die grundlegenden
+Werte zur Verfügung stehen.
 \subsection{Berechnungen}
-\label{sec:org3fa98a3}
+\label{sec:orgfcd4372}
 Auch wenn die \texttt{Raketengleichung} und andere Hilfsmittel zur Verfügung stehen, ist
 es doch weiterhin möglich, die Raketen schrittweise zu simulieren. Da jeder
 Schritt in einer solchen Simulation beinahe identisch abläuft, aber trotzdem von
@@ -118,21 +126,20 @@ Geschwindigkeit zu berechnen. Zuerst wird über die Impulserhaltung die neue
 Geschwindigkeit ohne externe Kräfte, hier \texttt{ideal\_vel} genannt, berechnet. Danach
 werden damit die zusätzlich wirkenden Kräfte verrechnet.
 \subsubsection{Externe Kräfte}
-\label{sec:org77e0a21}
+\label{sec:org2a57000}
 Mit der Impulserhaltung lässt sich lediglich die Geschwindigkeit oder Masse
 eines Objektes berechnen. Allerdings hat man dann noch keine Vorstellung von der
 Beschleunigung die auf ein Objekt wirkt. Allerdings stellt sich heraus, dass ein
 einfacher Trick verwendet werden kann, um diese Berechnung zu vereinfachen. Die
 Beschleunigung lässt sich wie folgt mathematisch berechnen: \[\vec{a} =
-\frac{\triangle v}{\triangle t}\] Da die Zeit im hier verwendeten
-Schrittverfahren pro Schritt immer \texttt{1} beträgt, kann man einfacher sagen:
-\[\vec{a} = \triangle v}\]
+\frac{\triangle v}{\triangle t}\] Über die Anzahl Schritte und die eigentliche
+Flugdauer lässt sich dann $\backslash$(\triangle t\} berechnen.
 \begin{enumerate}
 \item \(\triangle t\) erlaubte es dann einfach, die extern wirkenden Kräfte, wie
-beispielsweise die Schwerkraft davon abzuziehen. \[a_neu = \trangle t -
-   9.81\]. Die neue Beschleunigung lässt sich dann wieder gleich in eine
-Geschwindigkeit umrechnen und zur ursprünglichen Geschwindigkeit addieren, um
-die neue Geschwindigkeit zu erhalten.
+beispielsweise die Schwerkraft davon abzuziehen. \[\vec{a} = \frac{\triangle
+   v}{\trangle t} - 9.81\]. Die neue Beschleunigung lässt sich dann wieder
+gleich in eine Geschwindigkeit umrechnen und zur ursprünglichen
+Geschwindigkeit addieren, um die neue Geschwindigkeit zu erhalten.
 \item Der Luftwiderstand war einiges komplizierter zu berechnen als die
 Schwerkraft. Zum einen mussten technische Probleme und Limitierungen
 berücksichtigt werden, wie beispielsweise die fehlende Präzision bei sehr
@@ -141,30 +148,29 @@ grosses Problem heraus. Aus Zeitgründen wurden verschiedene Quellen gesammelt
 und verrechnet, anstatt die tatsächlichen Werte zu finden oder zu berechnen.
 \begin{enumerate}
 \item Tatsächlich gab es überraschend wenig Daten über die Form oder \texttt{c-Werte} von
-Raketen. Also wurde am Ende einfach der eines \href{http://www.staedtisches-gymnasium-wermelskirchen.de/sites/default/files/physik/Fall-Papierkegel-mit-Luftwiderstand.pdf}{Kegels} angenommen, also
-\texttt{0.75}. Obwohl dies bei weitem nicht Perfekt ist, ähneln die meisten Raketen
-in ihrer Form einem Kegel doch sehr, wodurch hier nur geringe Fehler
-entstehen sollten. In einer späteren Version des Simulators soll auch
-dieser Wert in den Raketeneinstellungen bestimmbar sein. Da sich der Wert
-aber bei jeder einzelnen Stufe ändert und bei der \texttt{Saturn V} sogar während
-einer Stufe nicht konstant bleibt, war es nicht möglich, diese Funktion in
-absehbarer Zeit zu implementieren, wodurch \texttt{0.75} als Konstante gesetzt
-wurde.
-\item Auch bei der Berechnung des Luftdrucks kamen neue Probleme auf. Neben den
+Raketen. Also wurde am Ende einfach eine Schätzung angenommen, also \texttt{0.52}.
+Obwohl dies bei weitem nicht Perfekt ist, ähneln die meisten Raketen in
+ihrer Form einem Kegel doch sehr, wodurch hier nur geringe Fehler
+entstehen sollten. Da sich der Wert aber bei jeder einzelnen Stufe ändert
+und bei der \texttt{Saturn V} sogar während einer Stufe nicht konstant bleibt, war
+es nicht möglich, diese Funktion in absehbarer Zeit zu implementieren,
+wodurch \texttt{0.52} als Konstante gesetzt wurde.
+\item Auch bei der Berechnung der Luftdichte kamen neue Probleme auf. Neben den
 ursprünglichen Problemen mit der korrekten Implementierung der Formel, gab
-es auch seltsame Fehler mit \texttt{Golang}. So musste am Ende für jede Höhe über
-\texttt{100km} (\href{https://de.wikipedia.org/wiki/K\%C3\%A1rm\%C3\%A1n-Linie}{Karman-Linie}) der Luftdruck auf \texttt{0} gesetzt werden, da sonst die
-Werte nicht mehr zu verarbeiten gewesen.
-\item Mit der Formel für den Luftwiderstand
-\[F_l = \frac{1}{2} * A * c_w * p * v²\]
-lässt sich die aktuelle Kraft des Luftwiderstands berechnen. Diese muss
-dann allerdings noch durch die Masse der Rakete geteilt werden, um daraus
-eine Beschleunigung zu machen, welche dann wie oben beschrieben von der
-Geschwindigkeit abgezogen werden kann.
+es auch seltsame Fehler mit \texttt{Golang}. So musste am Ende eine vereinfache,
+Schweizerhöhenformel angewandt werden, da sonst die Werte nicht mehr zu
+verarbeiten gewesen wären. Dadurch ist es allerdings aktuell nur möglich,
+den Luftwiderstand auf der Erde zu berechnen. Für alle anderen Planeten
+wird momentan noch die selber Formel verwendet.
+\item Mit der Formel für den Luftwiderstand \[F_l = \frac{1}{2} * A * c_w * p *
+      v²\] lässt sich die aktuelle Kraft des Luftwiderstands berechnen. Diese
+muss dann allerdings noch durch die Masse der Rakete geteilt werden, um
+daraus eine Beschleunigung zu machen, welche dann wie oben beschrieben von
+der Geschwindigkeit abgezogen werden kann.
 \end{enumerate}
 \end{enumerate}
 \subsection{Raketen}
-\label{sec:orgcaf2288}
+\label{sec:orge5135a9}
 Zwar waren bereits gute Werte für die \texttt{Saturn V} vorhanden, aber es stellte sich
 als überraschend kompliziert heraus gute Daten für die \texttt{Falcon 9} oder andere
 Raketen zu finden. Zum einen liegt dies an der Tatsache, dass \texttt{SpaceX} eine
@@ -176,7 +182,7 @@ Annahmen und Schätzungen getroffen werden. Die Mehrheit der Daten stammten aber
 ursprünglich aus diesem inoffiziellen \href{https://www.reddit.com/r/spacex/comments/3lsm0q/f9ft\_vs\_f9v11\_fuel\_mass\_flow\_rate\_isp/}{Reddit Post} und ergeben tatsächlich
 Flugdaten, welche der echten Rakete ähneln.
 \subsection{Plotting}
-\label{sec:orge608555}
+\label{sec:orgbe9a2d7}
 Die ursprüngliche Planung unserer Software enthielt die Absicht, die
 berechneten Flugdaten als Graphen zu exportieren. Aufgrund von zeitlichen und
 technischen Limitierungen mussten diese Funktionen allerdings weggelassen
@@ -184,6 +190,72 @@ werden, sollen aber in einer späteren Version der Software implementiert werden
 Aktuell werden die Flugdaten lediglich in der Konsole, sowie einem \texttt{CSV-ähnlichen}
 Format exportiert und gespeichert.
 \section{Resultate}
-\label{sec:org6175036}
-TODO.
+\label{sec:org893dc43}
+Wie zu erwarten war, stimmen die erhaltenen Daten nicht perfekt mit den
+tatsächlich gemessenen überein. Dies könnte verschiedene Gründe haben,
+Rechenfehler und Programmierfehler sind leider nicht auszuschliessen. Aber auch
+die Unterschiede zwischen der Simulation und der \emph{echten} Welt sind zu beachten.
+
+Einige Unterschiede zwischen der Simulation und
+der Tatsächlichen \texttt{Saturn V} oder \texttt{Falcon 9}:
+\begin{itemize}
+\item Die Schwerkraft ist keine Konstante und nimmt mit steigender Höhe ab.
+\item Jede Rakete versucht \emph{Orbit} zu erreichen. Damit ist aber eigentlich mehr eine
+Geschwindigkeit relativ zur Erdoberfläche als eine Höhe gemeint. Raketen
+fliegen also immer stark \emph{seitlich}, um dann in die Umlaufbahn der Erde zu
+gelangen. In unserer Simulation fliegt die Rakete allerdings immer gerade nach
+oben.
+\item Die \texttt{Saturn V} transportiere für ihre Mondmissionen bis zu \texttt{41'000kg} Ladung. Auch
+wenn das Programm in der Lage ist, auf zusätzliche Gewichte Rücksicht zu
+nehmen, wurde das \texttt{Payload-Gewicht} immer auf \texttt{0} gesetzt. Dies erlaubte uns, die
+erhaltenen Werte besser mit anderen Gruppen und Methoden zu vergleichen. Daher
+steht am Ende der Simulation auch immer ein Endgewicht von \texttt{0}. Dies gibt an,
+dass die Rakete alle drei Stufen abgeworfen hat, und jetzt nur noch die
+Ladung, also \texttt{0kg} übrig sind.
+\item Durch das \texttt{Launch-Escape-System} und andere Gerätschaften ändert sich der
+\(C_w\)-Wert der Rakete während des Fluges. Unsere Simulation ist aktuell nicht
+in der Lage, dies mit einzuberechnen.
+\item Während die \texttt{Saturn V} noch ältere Technologien und Triebwerke verwendete, ist
+die \texttt{Falcon 9} inzwischen in der Lage, die Leistung ihre Triebwerke während des
+Fluges anzupassen. Unsere Simulation hat aktuell keine Unterstützung für
+solche Funktionen.
+\end{itemize}
+Mit diesen, und wahrscheinlich mehr Verschiedenheiten ist es nur verständlich,
+dass die Werte der Simulation so verschieden sind als die der tatsächlichen
+Rakete. Wir nehmen an, dass besonders die Flugbahn und Richtung einen grossen
+Einfluss auf die Endresultate hatten, da wir lediglich die Höhe und nicht die
+zurückgelegte Distanz als Vergleichswerte hatten.
+
+In der Simulation einer \texttt{Saturn V}, Startplatz Erde, erhielten wir eine
+Endgeschwindigkeit von ungefähr \(11401.8\)m/s, sowie eine Endhöhe von ungefähr
+\(3175\) Kilometern. \\
+Relativ zu den tatsächlich gemessenen Werten von \(7390/)m/s, sowie \(191.1\)
+Kilometern ist natürlich direkt ein grosser Unterschied zu erkennen. Während die
+Geschwindigkeit um weniger als einen Faktor von \texttt{2} daneben liegt, erkennt man
+schnell, dass die Höhe um ein vielfaches höher als die gemessen Werte
+ausgefallen ist. Es ist anzunehmen, dass eine realistische Flugbahn sowie eine
+tatsächliche Transportmasse die Höhe einiges reduziert hätten.
+
+Aber es muss erkannt werden, dass die Stärke dieses Simulators nicht in der
+absolut exakten Berechnung von Raketenflugbahnen oder Treibstoffkurven liegt,
+sondern in der Möglichkeit in kurzer Zeit Raketen in verschiedenen, lustigen
+Umgebungen zu testen und zu vergleichen. Diese Software ist nicht von
+\texttt{NASA-Ingenieure} entwickelt worden und sollte auch niemals von solchen eingesetzt
+werden.
+
+Natürlich ist jeder in der Lage und herzlich dazu eingeladen, diese Simulation
+selbst auszuführen, zu verbessern und die Resultate mit den hier besprochenen zu
+vergleichen. Der Code dafür findet sich auf \href{https:github.com/jakobklemm/saturnv}{Github.com/Jakobklemm}. Das Programm
+lässt sich einfach mit den Befehlen
+\begin{minted}[]{bash}
+go build && ./saturnv
+\end{minted}
+kompilieren und ausführen.
+
+Bei Problemen einfach ein \texttt{Issue} öffnen oder direkt in Kontakt treten. Diese
+Software soll es Schülern oder Interessierten erlauben, einfach Raketen in
+verschiedenen Umgebungen zu testen und mit den Werten und normalerweise
+konstanten Werten zu experimentieren.
+
+\url{https://github.com/jakobklemm/saturnv}
 \end{document}

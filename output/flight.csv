@@ -198,7 +198,7 @@
 0,Altitude,128716.050959
 0,Weight,746000.000000
 0,Acceleration,47.472754
-0,Lower stage,161.000000
+-1,Lower stage,161.000000
 49,Velocity,2581.566512
 49,Altitude,146787.016544
 49,Weight,601960.000000
@@ -399,7 +399,7 @@
 0,Altitude,1216985.647272
 0,Weight,159000.000000
 0,Acceleration,23.978320
-0,Center stage,387.000000
+-1,Center stage,387.000000
 49,Velocity,4859.774236
 49,Altitude,1246144.292688
 49,Weight,117866.000000
@@ -600,4 +600,4 @@
 0,Altitude,3175285.726571
 0,Weight,13300.000000
 0,Acceleration,101.970952
-0,Upper stage,319.000000
+-1,Upper stage,319.000000

@@ -14,7 +14,7 @@ func launch() {
 	cmd.Run()
 
 	//Debug toggle for countdown
-	if false {
+	if true {
 		fmt.Println("- - - - - - - -")
 		fmt.Println("Rocket launch...")
 		fmt.Println("- - - - - - - -")

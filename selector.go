@@ -14,6 +14,7 @@ var (
 	menu map[int]string
 	rocket Rocket
 	planet Planet
+	settings Settings
 )
 
 func startup() {

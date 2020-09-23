@@ -16,5 +16,8 @@
               "burn_time": 397
           }
       ],
-    "payload_weight": 8300
+    "payload_weight": 0,
+    "steps": 50,
+    "c": 0.52,
+    "area": 78.5
   }

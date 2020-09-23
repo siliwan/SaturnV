@@ -50,10 +50,12 @@ Das Menü ist technisch zwar der am wenigsten interessante Teil, doch es ist ein
 Konsolen-Printouts und Zahleninputs, macht dieses Menü die einfache Interaktion
 mit der Software möglich, ohne dabei besondere Anleitungen oder Erklärungen zu
 verfassen. Die Inputs werden dann in Zahlen umgewandelt, von wo sie mit
-=if-Schleifen= verarbeitet werden. Der Code ist nur bedingt fehlertolerant,
-da man beliebige Inputs an dass Programm geben kann, allerdings sind solche
-Fehler nicht schlimm und zwingen das gelegentlich zum Neustart, ohne weitere
-Folgen nach sich zu ziehen.
+=if-Schleifen= verarbeitet werden. Der Code ist nur bedingt fehlertolerant, da man
+beliebige Inputs an dass Programm geben kann, allerdings sind solche Fehler
+nicht schlimm und zwingen das Programm gelegentlich zum Neustart, ohne weitere
+Folgen nach sich zu ziehen. Zwischen den einzelnen Menüs und Listen wird
+ebenfalls die Konsole geleert. Diese Funktion wird aktuell nur auf =Linux=
+unterstützt.
 *** Einstellungen
 Da Raketen unter verschiedenen Kriterien und in verschiedenen Situationen
 simuliert werden können, war es wichtig, die einzelnen Funktionen und Parameter
@@ -65,11 +67,13 @@ aufgelistet sind.\\
 den Flug zu bestimmen. Sobald diese feststehen, kann die Simulation gestartet
 werden.
 *** Module
-Da verschiedene Raketen verschiedene Treibstoffe, Bauarten, Triebwerke und
-Flugbahnen besitzen, war es ebenfalls wichtig, eine Software zu schreiben, die
-für verschiedene Situationen gewappnet ist. Im dedizierten =rockets/= Ordner
-können beliebige Konfigurationen und Modelle in Form von =JSON-Dateien= abgelegt
-werden, welche dann der Simulation zur Verfügung stehen.
+Verschiedene Raketen haben verschiedene Treibstoffe, Bauarten, Triebwerke und
+Flugbahnen. Daher war es ebenfalls wichtig, eine Software zu schreiben, die für
+verschiedene Situationen gewappnet ist. Im dedizierten =rockets/= Ordner können
+beliebige Konfigurationen und Modelle in Form von =JSON-Dateien= abgelegt werden,
+welche dann der Simulation zur Verfügung stehen. Über =settings.json= ist es
+ebenfalls möglich, weitere Planeten hinzuzufügen, solange die grundlegenden
+Werte zur Verfügung stehen.
 ** Berechnungen
 Auch wenn die =Raketengleichung= und andere Hilfsmittel zur Verfügung stehen, ist
 es doch weiterhin möglich, die Raketen schrittweise zu simulieren. Da jeder
@@ -88,14 +92,13 @@ eines Objektes berechnen. Allerdings hat man dann noch keine Vorstellung von der
 Beschleunigung die auf ein Objekt wirkt. Allerdings stellt sich heraus, dass ein
 einfacher Trick verwendet werden kann, um diese Berechnung zu vereinfachen. Die
 Beschleunigung lässt sich wie folgt mathematisch berechnen: \[\vec{a} =
-\frac{\triangle v}{\triangle t}\] Da die Zeit im hier verwendeten
-Schrittverfahren pro Schritt immer =1= beträgt, kann man einfacher sagen:
-\[\vec{a} = \triangle v}\]
+\frac{\triangle v}{\triangle t}\] Über die Anzahl Schritte und die eigentliche
+Flugdauer lässt sich dann \(\triangle t} berechnen.
 1. \(\triangle t\) erlaubte es dann einfach, die extern wirkenden Kräfte, wie
-   beispielsweise die Schwerkraft davon abzuziehen. \[a_neu = \trangle t -
-   9.81\]. Die neue Beschleunigung lässt sich dann wieder gleich in eine
-   Geschwindigkeit umrechnen und zur ursprünglichen Geschwindigkeit addieren, um
-   die neue Geschwindigkeit zu erhalten.
+   beispielsweise die Schwerkraft davon abzuziehen. \[\vec{a} = \frac{\triangle
+   v}{\trangle t} - 9.81\]. Die neue Beschleunigung lässt sich dann wieder
+   gleich in eine Geschwindigkeit umrechnen und zur ursprünglichen
+   Geschwindigkeit addieren, um die neue Geschwindigkeit zu erhalten.
 2. Der Luftwiderstand war einiges komplizierter zu berechnen als die
    Schwerkraft. Zum einen mussten technische Probleme und Limitierungen
    berücksichtigt werden, wie beispielsweise die fehlende Präzision bei sehr
@@ -103,26 +106,25 @@ Schrittverfahren pro Schritt immer =1= beträgt, kann man einfacher sagen:
    grosses Problem heraus. Aus Zeitgründen wurden verschiedene Quellen gesammelt
    und verrechnet, anstatt die tatsächlichen Werte zu finden oder zu berechnen.
    1. Tatsächlich gab es überraschend wenig Daten über die Form oder =c-Werte= von
-      Raketen. Also wurde am Ende einfach der eines [[http://www.staedtisches-gymnasium-wermelskirchen.de/sites/default/files/physik/Fall-Papierkegel-mit-Luftwiderstand.pdf][Kegels]] angenommen, also
-      =0.75=. Obwohl dies bei weitem nicht Perfekt ist, ähneln die meisten Raketen
-      in ihrer Form einem Kegel doch sehr, wodurch hier nur geringe Fehler
-      entstehen sollten. In einer späteren Version des Simulators soll auch
-      dieser Wert in den Raketeneinstellungen bestimmbar sein. Da sich der Wert
-      aber bei jeder einzelnen Stufe ändert und bei der =Saturn V= sogar während
-      einer Stufe nicht konstant bleibt, war es nicht möglich, diese Funktion in
-      absehbarer Zeit zu implementieren, wodurch =0.75= als Konstante gesetzt
-      wurde.
-   2. Auch bei der Berechnung des Luftdrucks kamen neue Probleme auf. Neben den
+      Raketen. Also wurde am Ende einfach eine Schätzung angenommen, also =0.52=.
+      Obwohl dies bei weitem nicht Perfekt ist, ähneln die meisten Raketen in
+      ihrer Form einem Kegel doch sehr, wodurch hier nur geringe Fehler
+      entstehen sollten. Da sich der Wert aber bei jeder einzelnen Stufe ändert
+      und bei der =Saturn V= sogar während einer Stufe nicht konstant bleibt, war
+      es nicht möglich, diese Funktion in absehbarer Zeit zu implementieren,
+      wodurch =0.52= als Konstante gesetzt wurde.
+   2. Auch bei der Berechnung der Luftdichte kamen neue Probleme auf. Neben den
       ursprünglichen Problemen mit der korrekten Implementierung der Formel, gab
-      es auch seltsame Fehler mit =Golang=. So musste am Ende für jede Höhe über
-      =100km= ([[https://de.wikipedia.org/wiki/K%C3%A1rm%C3%A1n-Linie][Karman-Linie]]) der Luftdruck auf =0= gesetzt werden, da sonst die
-      Werte nicht mehr zu verarbeiten gewesen.
-   3. Mit der Formel für den Luftwiderstand
-      \[F_l = \frac{1}{2} * A * c_w * p * v²\]
-      lässt sich die aktuelle Kraft des Luftwiderstands berechnen. Diese muss
-      dann allerdings noch durch die Masse der Rakete geteilt werden, um daraus
-      eine Beschleunigung zu machen, welche dann wie oben beschrieben von der
-      Geschwindigkeit abgezogen werden kann.
+      es auch seltsame Fehler mit =Golang=. So musste am Ende eine vereinfache,
+      Schweizerhöhenformel angewandt werden, da sonst die Werte nicht mehr zu
+      verarbeiten gewesen wären. Dadurch ist es allerdings aktuell nur möglich,
+      den Luftwiderstand auf der Erde zu berechnen. Für alle anderen Planeten
+      wird momentan noch die selber Formel verwendet.
+   3. Mit der Formel für den Luftwiderstand \[F_l = \frac{1}{2} * A * c_w * p *
+      v²\] lässt sich die aktuelle Kraft des Luftwiderstands berechnen. Diese
+      muss dann allerdings noch durch die Masse der Rakete geteilt werden, um
+      daraus eine Beschleunigung zu machen, welche dann wie oben beschrieben von
+      der Geschwindigkeit abgezogen werden kann.
 ** Raketen
 Zwar waren bereits gute Werte für die =Saturn V= vorhanden, aber es stellte sich
 als überraschend kompliziert heraus gute Daten für die =Falcon 9= oder andere
@@ -142,4 +144,68 @@ werden, sollen aber in einer späteren Version der Software implementiert werden
 Aktuell werden die Flugdaten lediglich in der Konsole, sowie einem =CSV-ähnlichen=
 Format exportiert und gespeichert.
 * Resultate
-TODO.
+Wie zu erwarten war, stimmen die erhaltenen Daten nicht perfekt mit den
+tatsächlich gemessenen überein. Dies könnte verschiedene Gründe haben,
+Rechenfehler und Programmierfehler sind leider nicht auszuschliessen. Aber auch
+die Unterschiede zwischen der Simulation und der /echten/ Welt sind zu beachten.
+
+Einige Unterschiede zwischen der Simulation und
+der Tatsächlichen =Saturn V= oder =Falcon 9=:
+- Die Schwerkraft ist keine Konstante und nimmt mit steigender Höhe ab.
+- Jede Rakete versucht /Orbit/ zu erreichen. Damit ist aber eigentlich mehr eine
+  Geschwindigkeit relativ zur Erdoberfläche als eine Höhe gemeint. Raketen
+  fliegen also immer stark /seitlich/, um dann in die Umlaufbahn der Erde zu
+  gelangen. In unserer Simulation fliegt die Rakete allerdings immer gerade nach
+  oben.
+- Die =Saturn V= transportiere für ihre Mondmissionen bis zu =41'000kg= Ladung. Auch
+  wenn das Programm in der Lage ist, auf zusätzliche Gewichte Rücksicht zu
+  nehmen, wurde das =Payload-Gewicht= immer auf =0= gesetzt. Dies erlaubte uns, die
+  erhaltenen Werte besser mit anderen Gruppen und Methoden zu vergleichen. Daher
+  steht am Ende der Simulation auch immer ein Endgewicht von =0=. Dies gibt an,
+  dass die Rakete alle drei Stufen abgeworfen hat, und jetzt nur noch die
+  Ladung, also =0kg= übrig sind.
+- Durch das =Launch-Escape-System= und andere Gerätschaften ändert sich der
+  \(C_w\)-Wert der Rakete während des Fluges. Unsere Simulation ist aktuell nicht
+  in der Lage, dies mit einzuberechnen.
+- Während die =Saturn V= noch ältere Technologien und Triebwerke verwendete, ist
+  die =Falcon 9= inzwischen in der Lage, die Leistung ihre Triebwerke während des
+  Fluges anzupassen. Unsere Simulation hat aktuell keine Unterstützung für
+  solche Funktionen.
+Mit diesen, und wahrscheinlich mehr Verschiedenheiten ist es nur verständlich,
+dass die Werte der Simulation so verschieden sind als die der tatsächlichen
+Rakete. Wir nehmen an, dass besonders die Flugbahn und Richtung einen grossen
+Einfluss auf die Endresultate hatten, da wir lediglich die Höhe und nicht die
+zurückgelegte Distanz als Vergleichswerte hatten.
+
+In der Simulation einer =Saturn V=, Startplatz Erde, erhielten wir eine
+Endgeschwindigkeit von ungefähr \(11401.8\)m/s, sowie eine Endhöhe von ungefähr
+\(3175\) Kilometern. \\
+Relativ zu den tatsächlich gemessenen Werten von \(7390/)m/s, sowie \(191.1\)
+Kilometern ist natürlich direkt ein grosser Unterschied zu erkennen. Während die
+Geschwindigkeit um weniger als einen Faktor von =2= daneben liegt, erkennt man
+schnell, dass die Höhe um ein vielfaches höher als die gemessen Werte
+ausgefallen ist. Es ist anzunehmen, dass eine realistische Flugbahn sowie eine
+tatsächliche Transportmasse die Höhe einiges reduziert hätten.
+
+Aber es muss erkannt werden, dass die Stärke dieses Simulators nicht in der
+absolut exakten Berechnung von Raketenflugbahnen oder Treibstoffkurven liegt,
+sondern in der Möglichkeit in kurzer Zeit Raketen in verschiedenen, lustigen
+Umgebungen zu testen und zu vergleichen. Diese Software ist nicht von
+=NASA-Ingenieure= entwickelt worden und sollte auch niemals von solchen eingesetzt
+werden.
+
+Natürlich ist jeder in der Lage und herzlich dazu eingeladen, diese Simulation
+selbst auszuführen, zu verbessern und die Resultate mit den hier besprochenen zu
+vergleichen. Der Code dafür findet sich auf [[https:github.com/jakobklemm/saturnv][Github.com/Jakobklemm]]. Das Programm
+lässt sich einfach mit den Befehlen
+#+begin_src bash
+go build && ./saturnv
+#+end_src
+kompilieren und ausführen.
+
+Bei Problemen einfach ein =Issue= öffnen oder direkt in Kontakt treten. Diese
+Software soll es Schülern oder Interessierten erlauben, einfach Raketen in
+verschiedenen Umgebungen zu testen und mit den Werten und normalerweise
+konstanten Werten zu experimentieren.
+
+[[https://github.com/jakobklemm/saturnv]]

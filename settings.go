@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 )
 
-
 type Settings struct {
 	Profile Profile `json:"profile"`
 	Planets []Planet `json:"planets"`

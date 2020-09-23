@@ -33,7 +33,7 @@ func results() {
 	fmt.Println("Rocket:", rocket.Name)
 	fmt.Println("Started from:", planet.Name)
 
-	fmt.Println("Final velocity:", result.Velocity)
-	fmt.Println("Final weight:", result.Weight)
-	fmt.Println("Final altitude:", result.Altitude)
+	fmt.Println("Final velocity:", result.Velocity, "m/s")
+	fmt.Println("Final weight:", result.Weight, "kg")
+	fmt.Println("Final altitude:", result.Altitude, "m")
 }

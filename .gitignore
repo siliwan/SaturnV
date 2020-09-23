@@ -1,3 +1,4 @@
-.tex
+*.tex
 saturnv
 saturnv.exe
+_minted-documentation/
