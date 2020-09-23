@@ -11,6 +11,7 @@ type Rocket struct {
 	Name string `json:"name"`
 	Stages []Stage `json:"stages"`
 	Payload_weight int `json:"payload_weight"`
+	Steps int `json:"steps"`
 }
 
 type Stage struct {

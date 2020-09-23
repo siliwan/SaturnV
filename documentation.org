@@ -49,7 +49,11 @@ Das Menü ist technisch zwar der am wenigsten interessante Teil, doch es ist ein
 äusserst relevantes Stück der Simulation. Basierend auf einfachen
 Konsolen-Printouts und Zahleninputs, macht dieses Menü die einfache Interaktion
 mit der Software möglich, ohne dabei besondere Anleitungen oder Erklärungen zu
-verfassen.
+verfassen. Die Inputs werden dann in Zahlen umgewandelt, von wo sie mit
+=if-Schleifen= verarbeitet werden. Der Code ist nur bedingt fehlertolerant,
+da man beliebige Inputs an dass Programm geben kann, allerdings sind solche
+Fehler nicht schlimm und zwingen das gelegentlich zum Neustart, ohne weitere
+Folgen nach sich zu ziehen.
 *** Einstellungen
 Da Raketen unter verschiedenen Kriterien und in verschiedenen Situationen
 simuliert werden können, war es wichtig, die einzelnen Funktionen und Parameter

@@ -4,23 +4,14 @@ import (
 	"math"
 )
 
-func altitude(delta_vel, seconds float64) float64{
-	return delta_vel * seconds
-}
-
-func gravity(vel, time float64) float64 {
-	return vel / time  - 10
-}
+// Saturn V r = 5 -> A ~ 78.5
+// Saturn V estim. C_w value = 0.52
 
 func res(vel, alt float64) float64 {
-	return 0.5 * 78.53975 * 0.75 * pluft(alt) * vel * vel
+	return 0.5 * 78.5 * 0.52 * density(alt) * math.Pow(vel, 2)
 }
 
-func pluft(alt float64) float64 {
-	// Due to math rounding error set the value to zero above the karman line (100km).
-	if alt >= 100000 {
-		return 0
-	}
-	v := 1.01325 * math.Exp(-((1.247015 * alt * planet.Gravity) / 1.01325))
-	return v
+func density(alt float64) float64 {
+	//Schweizer formel https://wind-data.ch/tools/luftdichte.php
+	return 1.247015 * math.Exp(-0.000104 * alt)
 }

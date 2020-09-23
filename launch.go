@@ -65,6 +65,9 @@ func launch() {
 }
 
 func compute() {
+	//Clear the log file
+	initial()
+
 	stages := rocket.Stages
 	liftoff_weight := rocket.Payload_weight
 	total_steps := 0
@@ -89,7 +92,7 @@ func compute() {
 
 // End of run: Stage gets dropped, subtract weight.
 func compute_stage(stage Stage, velocity, altitude, weight float64) (float64, float64, float64){
-	return compute_step(stage.Burn_time - 1, weight, velocity, altitude, stage)
+	return compute_step(rocket.Steps - 1, weight, velocity, altitude, stage)
 }
 
 // length key must equal length values

@@ -44,5 +44,6 @@ func main(){
 }
 
 func step(m_rakete, m_gas, vel_rakete, exit_vel float64) float64 {
-	return ((m_rakete * vel_rakete + m_gas * exit_vel) / (m_rakete))
+	return vel_rakete + (m_gas * exit_vel / m_rakete)
+	//return ((m_rakete * vel_rakete + m_gas * exit_vel) / (m_rakete))
 }
