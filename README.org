@@ -15,7 +15,7 @@ Files must be located in the =rockets/= directory.
 #+begin_src javascript
   {
       "name": "Saturn V",
-      //Array of rocket stages, variable lengt. Minimum 1
+      //Array of rocket stages, variable lenght. Minimum 1
       "stages": [
           {
               "name": "Lower stage",
