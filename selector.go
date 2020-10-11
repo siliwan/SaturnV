@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-// Global vars for state setting. Bad behaviour, don't repliacte.
+// Global vars for state setting. Bad behaviour, don't replicate.
 var (
 	menu map[int]string
 	rocket Rocket
