@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// Final spped, and height
+// Final speed and height
 type Results struct {
 	Steps int
 	Stages []Flight
